@@ -1,0 +1,54 @@
+﻿@model PagedList.IPagedList<Access.Models.ViewModels.HostingListViewModel>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 class="text-center">Hosting Information</h2>
+@Html.ActionLink("Create New Hosting", "Create")
+<div>
+    @using (Html.BeginForm("Index", "Hosting", FormMethod.Get))
+    {
+        <p>
+            Find By Customer Name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" value="Search" />
+        </p>}
+    <br />
+    <table class="table table-bordered">
+        <tr>
+            @*<th>Hosting Id</th>*@
+            <th>Customer Name</th>
+            <th>Hosting Package Name</th>
+            <th>Hosting Date</th>
+            <th>Hosting Billing Date</th>
+            <th>Hosting Renewal Price</th>
+            <th>Other Services</th>
+            <th>Action..</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>@Html.DisplayFor(modelItem => item.HostingId)</td>*@
+                <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+                <td>@Html.DisplayFor(modelItem => item.HostingPackageName)</td>
+                <td>@Convert.ToString(String.Format("{0:MM/dd/yyyy}", item.HostingDate))</td>
+                <td>@Convert.ToString(String.Format("{0:MM/dd/yyyy}", item.HostingBillingDate))</td>
+                <td>@Html.DisplayFor(modelItem => item.HostingRenewalPrice)</td>
+                <td>@Html.DisplayFor(modelItem => item.OtherServices)</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.HostingId })|
+                    @Html.ActionLink("Delete", "Delete", new { id = item.HostingId })
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+    Page @(Model.PageCount<Model.PageNumber?0:Model.PageNumber) Of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+    <div id="partialDiv"></div>
+    <script src="~/Scripts/details.js"></script>
+</div>
+
+

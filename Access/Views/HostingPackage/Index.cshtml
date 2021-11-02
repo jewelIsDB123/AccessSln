@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Access.Models.HostingPackage>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">HostingPackage Information</h2>
+
+<p>
+    @Html.ActionLink("Create New HostingPackage", "Create")
+</p>
+<table class="table table-bordered" style="background-color:burlywood">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HostingPackageId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HostingPackageName)
+        </th>
+        <th>Actions..</th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.HostingPackageId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.HostingPackageName)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.HostingPackageId }) |
+        @Html.ActionLink("Details", "Details", new { id = item.HostingPackageId }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.HostingPackageId })
+    </td>
+</tr>
+}
+
+</table>

@@ -1,0 +1,92 @@
+﻿@model Access.Models.ViewModels.CreateHostingViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 class="text-center">Create Hosting List</h2>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+@using (Html.BeginForm("AddOrEdit", "Hosting", FormMethod.Post, new { @enctype = "multipart/form-data", @id = "Submit" }))
+{
+    @Html.AntiForgeryToken();
+    <div class="form-group row">
+        @Html.LabelFor(model => model.CustomerId, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CustomerId, new SelectList(Model.hostList, "CustomerId", "CustomerName"), "Select CustomerName")
+            @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.HostingPackageId, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.HostingPackageId, new SelectList(Model.hpList, "HostingPackageId", "HostingPackageName"), "Select HostingPackageName")
+            @Html.ValidationMessageFor(model => model.HostingPackageId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.HostingDate, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-10">
+
+            @Html.TextBoxFor(model => model.HostingDate, "{0:MM/dd/yyyy}", new { htmlAttributes = new { @class = "form-control datetimepicker1" } })
+            @Html.ValidationMessageFor(model => model.HostingDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.HostingBillingDate, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-10">
+
+            @Html.TextBoxFor(model => model.HostingBillingDate, "{0:MM/dd/yyyy}", new { htmlAttributes = new { @class = "form-control datetimepicker1" } })
+            @Html.ValidationMessageFor(model => model.HostingBillingDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.HostingRenewalPrice, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.HostingRenewalPrice, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.HostingRenewalPrice, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.OtherServices, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.OtherServices, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.OtherServices, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-success" value="Create" />
+        </div>
+        @Html.ActionLink("Back to Hosting List", "Index")
+    </div>
+}
+
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.bootstrap.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#HostingDate").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+    })
+    $(document).ready(function () {
+        $("#HostingBillingDate").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+    })
+</script>
+
+
+
+

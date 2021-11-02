@@ -1,0 +1,92 @@
+﻿@model Access.Models.ViewModels.CreateDomainViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Domain Create List</h2>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+
+@using (Html.BeginForm("AddOrEdit", "Domain", FormMethod.Post, new { @enctype = "multipart/form-data", @id = "Submit" }))
+{
+    @Html.AntiForgeryToken();
+    <div class="form-group row">
+        @Html.LabelFor(model => model.CustomerId, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CustomerId, new SelectList(Model.domList,"CustomerId", "CustomerName"), "Select CustomerName")
+            @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.DomainName, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.DomainName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DomainName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.DomainRegistrationDate, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-10">
+
+            @Html.TextBoxFor(model => model.DomainRegistrationDate, "{0:MM/dd/yyyy}", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DomainRegistrationDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.DomainBillingDate, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.DomainBillingDate, "{0:MM/dd/yyyy}", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DomainBillingDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.RenewalPrice, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.RenewalPrice, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.RenewalPrice, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.DHStatus, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.CheckBoxFor(model => model.DHStatus)
+            @Html.ValidationMessageFor(model => model.DHStatus, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "form-control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-success" value="Create" />
+        </div>
+        @Html.ActionLink("Back to Domain List", "Index")
+    </div>
+}
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.bootstrap.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#DomainRegistrationDate").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+    })
+    $(document).ready(function () {
+        $("#DomainBillingDate").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+    })
+</script>
+
+
+
+

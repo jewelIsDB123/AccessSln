@@ -1,0 +1,61 @@
+﻿@model PagedList.IPagedList<Access.Models.ViewModels.DomainListViewModel>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Domain Information</h2>
+@Html.ActionLink("Create New Domain", "Create")
+<div>
+
+    @using (Html.BeginForm("Index", "Domain", FormMethod.Get))
+    {
+        <p>
+            Find By Domain Name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" value="Search" />
+        </p>
+    }
+
+    <table class="table table-bordered">
+        <tr>
+            @*<th>Domain Id</th>*@
+            <th>Customer Name</th>
+            <th>Domain Name</th>
+            <th>Domain Registration Date</th>
+            <th>Domain Billing Date</th>
+            <th>Renewal Price</th>
+            <th>DHStatus</th>
+            <th>Notes</th>
+            <th>Action..</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>@Html.DisplayFor(modelItem => item.DomainId)</td>*@
+                <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+                <td>@Html.DisplayFor(modelItem => item.DomainName)</td>
+                <td>@Convert.ToString(String.Format("{0:MM/dd/yyyy}", item.DomainRegistrationDate))</td>
+                <td>@Convert.ToString(String.Format("{0:MM/dd/yyyy}", item.DomainBillingDate))</td>
+                <td>@Html.DisplayFor(modelItem => item.RenewalPrice)</td>
+                <td>@Html.DisplayFor(modelItem => item.DHStatus)</td>
+                <td>@Html.DisplayFor(modelItem => item.Notes)</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.DomainId })|
+                    @Html.ActionLink("Delete", "Delete", new { id = item.DomainId })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<br />
+
+        Page @(Model.PageCount<Model.PageNumber?0:Model.PageNumber) Of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+    <div id="partialDiv"></div>
+    <script src="~/Scripts/details.js"></script>
+
+
+
